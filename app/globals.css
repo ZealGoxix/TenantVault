@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --gold: #C9A84C;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  ::selection {
+    background: #C9A84C33;
+    color: #E8C97A;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #1A1D23;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #3A3E4A;
+    border-radius: 3px;
+  }
+}
+
+@layer components {
+  .vault-card {
+    @apply bg-vault-charcoal border border-vault-steel rounded-xl p-6;
+  }
+
+  .vault-input {
+    @apply w-full bg-vault-steel border border-vault-mist rounded-lg px-4 py-3
+           text-vault-snow placeholder-vault-ash font-body text-sm
+           focus:outline-none focus:border-vault-gold focus:ring-1 focus:ring-vault-gold/30
+           transition-colors duration-200;
+  }
+
+  .vault-btn-primary {
+    @apply bg-vault-gold hover:bg-vault-gold-light text-vault-ink font-body font-semibold
+           px-6 py-3 rounded-lg transition-all duration-200 text-sm
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  .vault-btn-ghost {
+    @apply border border-vault-mist hover:border-vault-gold text-vault-silver hover:text-vault-gold
+           font-body font-medium px-6 py-3 rounded-lg transition-all duration-200 text-sm;
+  }
+
+  .vault-label {
+    @apply block text-xs font-mono font-medium text-vault-ash uppercase tracking-widest mb-2;
+  }
+
+  .gold-rule {
+    @apply h-px bg-gradient-to-r from-transparent via-vault-gold to-transparent opacity-40;
+  }
+}
