@@ -6,8 +6,6 @@
 
 **Stack:** Next.js 14 · Supabase · Tailwind CSS · Vercel · Resend · @react-pdf/renderer
 
-Live Demo: https://tenant-vault.vercel.app/
-
 ---
 
 ## Features
@@ -199,6 +197,8 @@ tenantvault/
 | Resend | 3,000 emails/month |
 
 ---
+
+## Interview Talking Points
 
 **Q: What is Row Level Security?**
 RLS enforces access at the PostgreSQL engine level — not just the application layer. A stolen JWT still can't read another tenant's data because the database itself rejects the query.
