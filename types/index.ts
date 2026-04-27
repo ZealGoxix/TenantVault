@@ -19,7 +19,6 @@ export type Case = {
   invite_token: string
   invite_expires_at: string | null
   created_at: string
-  // joined
   landlord?: Profile
   tenant?: Profile
 }
@@ -34,21 +33,8 @@ export type Evidence = {
   mime_type: string
   caption: string | null
   uploaded_at: string
-  // joined
   uploader?: Profile
   signed_url?: string
-}
-
-export type AuditLog = {
-  id: string
-  case_id: string
-  user_id: string | null
-  event_type: AuditEventType
-  metadata: Record<string, unknown> | null
-  ip_address: string | null
-  created_at: string
-  // joined
-  user?: Profile
 }
 
 export type AuditEventType =
@@ -58,3 +44,14 @@ export type AuditEventType =
   | 'photo_uploaded'
   | 'pdf_exported'
   | 'case_closed'
+
+export type AuditLog = {
+  id: string
+  case_id: string
+  user_id: string | null
+  event_type: AuditEventType
+  metadata: Record<string, string> | null
+  ip_address: string | null
+  created_at: string
+  user?: Profile
+}

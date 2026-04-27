@@ -8,7 +8,7 @@ export default function EvidenceGallery({ evidence }: Props) {
   if (!evidence.length) {
     return (
       <div className="vault-card border-dashed text-center py-10">
-        <p className="font-body text-sm text-vault-ash">No photos uploaded yet</p>
+        <p className="text-sm" style={{ color: '#6B7280' }}>No photos uploaded yet</p>
       </div>
     )
   }
@@ -17,7 +17,7 @@ export default function EvidenceGallery({ evidence }: Props) {
     <div className="grid grid-cols-2 gap-3">
       {evidence.map(ev => (
         <div key={ev.id} className="vault-card p-0 overflow-hidden group">
-          <div className="relative aspect-[4/3] bg-vault-steel overflow-hidden">
+          <div className="relative aspect-[4/3] overflow-hidden" style={{ background: '#252830' }}>
             {ev.signed_url ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
@@ -37,15 +37,15 @@ export default function EvidenceGallery({ evidence }: Props) {
           </div>
           <div className="p-3">
             {ev.caption && (
-              <p className="font-body text-xs text-vault-silver mb-1 leading-snug">{ev.caption}</p>
+              <p className="text-xs mb-1 leading-snug" style={{ color: '#9CA3AF' }}>{ev.caption}</p>
             )}
             <div className="flex items-center justify-between">
-              <span className="font-mono text-[10px] text-vault-mist">
+              <span className="font-mono text-[10px]" style={{ color: '#3A3E4A' }}>
                 {ev.uploader?.full_name ?? 'Unknown'}
               </span>
-              <span className="font-mono text-[10px] text-vault-mist">
+              <span className="font-mono text-[10px]" style={{ color: '#3A3E4A' }}>
                 {new Date(ev.uploaded_at).toLocaleDateString('en-US', {
-                  month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+                  month: 'short', day: 'numeric',
                 })}
               </span>
             </div>

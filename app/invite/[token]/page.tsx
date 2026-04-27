@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default async function InvitePage({ params }: Props) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   // Look up case by invite token
   const { data: caseData, error } = await supabase

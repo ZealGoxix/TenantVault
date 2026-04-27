@@ -8,8 +8,10 @@
   --color-vault-ash:        #6B7280;
   --color-vault-silver:     #9CA3AF;
   --color-vault-snow:       #F3F4F6;
+  --color-vault-white:      #FFFFFF;
   --color-vault-gold:       #C9A84C;
   --color-vault-gold-light: #E8C97A;
+  --color-vault-amber:      #D97706;
   --color-vault-emerald:    #059669;
   --color-vault-crimson:    #DC2626;
   --color-vault-sky:        #0EA5E9;
@@ -26,6 +28,10 @@
 @keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
 @layer base {
@@ -69,8 +75,8 @@
 
   .vault-label {
     @apply block text-xs font-medium uppercase tracking-widest mb-2;
-    color: #6B7280;
     font-family: var(--font-mono);
+    color: #6B7280;
   }
 
   .gold-rule {
