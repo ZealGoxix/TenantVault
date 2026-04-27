@@ -242,7 +242,7 @@ export async function GET(
     buildPdf(c, evidence as Evidence[], (auditLogs as AuditLog[]) ?? [], generatedAt)
   )
 
-  return new NextResponse(pdfBuffer, {
+  return new NextResponse(new Uint8Array(pdfBuffer), {
     headers: {
       'Content-Type': 'application/pdf',
       'Content-Disposition': `attachment; filename="tenantvault-case-${params.caseId.slice(0, 8)}.pdf"`,
