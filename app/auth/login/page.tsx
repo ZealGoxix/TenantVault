@@ -56,7 +56,13 @@ function LoginForm() {
             value={password} onChange={e => setPassword(e.target.value)}
             className="vault-input" placeholder="••••••••"/>
         </div>
-        <button type="submit" disabled={loading} className="vault-btn-primary w-full mt-2">
+        <div className="flex justify-end -mt-2">
+          <Link href="/auth/forgot-password" className="text-xs transition-colors" style={{ color: '#6B7280' }}>
+            Forgot password?
+          </Link>
+        </div>
+
+        <button type="submit" disabled={loading} className="vault-btn-primary w-full">
           {loading ? 'Signing in…' : 'Sign in →'}
         </button>
       </form>
