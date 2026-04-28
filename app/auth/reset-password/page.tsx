@@ -1,10 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
-import { Suspense } from 'react'
 
 function ResetForm() {
   const router = useRouter()
@@ -19,14 +18,26 @@ function ResetForm() {
   const urlErrorDesc = searchParams.get('error_description')
 
   useEffect(() => {
-    if (urlError) return // don't wait for auth state if there's already an error
+    if (urlError) return
+
     const supabase = createClient()
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-      if (event === 'PASSWORD_RECOVERY') {
+
+    // Check if we already have a session (token was exchanged in confirm route)
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
         setReady(true)
+        return
       }
+
+      // Otherwise wait for PASSWORD_RECOVERY event (direct link flow)
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+        if (event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN') {
+          setReady(true)
+        }
+      })
+
+      return () => subscription.unsubscribe()
     })
-    return () => subscription.unsubscribe()
   }, [urlError])
 
   async function handleSubmit(e: React.FormEvent) {
@@ -61,7 +72,7 @@ function ResetForm() {
         </div>
         <h2 className="font-display text-xl font-bold mb-2" style={{ color: '#F3F4F6' }}>Link expired</h2>
         <p className="text-sm mb-6" style={{ color: '#6B7280' }}>
-          {urlErrorDesc?.replace(/\+/g, ' ') ?? 'This reset link has expired or already been used.'}
+          {decodeURIComponent(urlErrorDesc?.replace(/\+/g, ' ') ?? 'This reset link has expired or already been used.')}
         </p>
         <Link href="/auth/forgot-password" className="vault-btn-primary inline-block">
           Request a new link →
