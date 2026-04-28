@@ -10,6 +10,12 @@ Live Demo: https://tenant-vault.vercel.app/
 
 ---
 
+![image1](images/tenant1.png)
+![image2](images/tenant2.png)
+![image3](images/tenant3.png)
+
+---
+
 ## Features
 
 - 🏠 **Inspection cases** — landlord creates a case per property, shares invite link with tenant
