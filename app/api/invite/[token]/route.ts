@@ -1,7 +1,7 @@
 import { createServiceClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 
-export async function GET(request: Request) {
+export async function GET() {
   return NextResponse.json({ error: 'Use POST' }, { status: 405 })
 }
 
@@ -28,12 +28,14 @@ export async function POST(
     return NextResponse.json({ error: 'Case is closed' }, { status: 403 })
   }
 
+  // If a DIFFERENT tenant is already linked, reject
+  if (caseData.tenant_id && caseData.tenant_id !== userId) {
+    return NextResponse.json({ error: 'This invite link has already been used by another tenant.' }, { status: 403 })
+  }
+
   // Ensure profile exists
   const { data: existingProfile } = await supabase
-    .from('profiles')
-    .select('id')
-    .eq('id', userId)
-    .single()
+    .from('profiles').select('id').eq('id', userId).single()
 
   if (!existingProfile) {
     const { data: authUser } = await supabase.auth.admin.getUserById(userId)
@@ -47,7 +49,7 @@ export async function POST(
     }
   }
 
-  // Link tenant if not already linked
+  // Link tenant (only if not already linked to this same user)
   if (!caseData.tenant_id) {
     await supabase
       .from('cases')
