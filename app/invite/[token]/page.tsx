@@ -1,22 +1,19 @@
-import { redirect } from 'next/navigation'
 import Link from 'next/link'
+import { createServiceClient } from '@/lib/supabase/server'
 import TenantJoinForm from '@/components/TenantJoinForm'
 
 interface Props {
   params: { token: string }
 }
 
-async function getCaseByToken(token: string) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/invite/validate?token=${token}`,
-    { cache: 'no-store' }
-  )
-  if (!res.ok) return null
-  return res.json()
-}
-
 export default async function InvitePage({ params }: Props) {
-  const caseData = await getCaseByToken(params.token)
+  const supabase = createServiceClient()
+
+  const { data: caseData } = await supabase
+    .from('cases')
+    .select('id, address, unit_number, move_out_date, status, tenant_id')
+    .eq('invite_token', params.token)
+    .single()
 
   if (!caseData) {
     return (
