@@ -77,4 +77,61 @@ export default async function DashboardPage() {
           )}
         </div>
 
-        <div className=
+        <div className="gold-rule mb-8"/>
+
+        {caseList.length === 0 ? (
+          <div className="vault-card text-center py-16">
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{ background: '#252830' }}>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6B7280" strokeWidth="1.5">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+            </div>
+            <h3 className="font-display text-xl mb-2" style={{ color: '#F3F4F6' }}>No cases yet</h3>
+            <p className="text-sm mb-6 max-w-xs mx-auto" style={{ color: '#6B7280' }}>
+              {isLandlord
+                ? 'Create your first inspection case to start building a tamper-evident evidence record.'
+                : 'You have no active inspection cases. Ask your landlord to share an invite link.'}
+            </p>
+            {isLandlord && (
+              <Link href="/cases/new" className="vault-btn-primary inline-block">Create first case →</Link>
+            )}
+          </div>
+        ) : (
+          <div className="grid gap-4">
+            {caseList.map((c) => (
+              <Link
+                key={c.id}
+                href={`/cases/${c.id}`}
+                className="vault-card flex items-center justify-between group transition-all duration-200"
+                style={{ textDecoration: 'none' }}
+              >
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-3 mb-1">
+                    <h2 className="font-display text-base font-semibold truncate" style={{ color: '#F3F4F6' }}>
+                      {c.address}{c.unit_number ? ` · Unit ${c.unit_number}` : ''}
+                    </h2>
+                    <span
+                      className="font-mono text-xs px-2 py-0.5 rounded-full whitespace-nowrap"
+                      style={{ background: STATUS_STYLES[c.status] ?? STATUS_STYLES.draft, color: STATUS_TEXT[c.status] ?? STATUS_TEXT.draft }}
+                    >
+                      {c.status}
+                    </span>
+                  </div>
+                  <p className="font-mono text-xs" style={{ color: '#6B7280' }}>
+                    Move-out: {new Date(c.move_out_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    {' · '}
+                    Created {new Date(c.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                  </p>
+                </div>
+                <svg className="ml-4 shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3A3E4A" strokeWidth="2">
+                  <path d="M9 18l6-6-6-6"/>
+                </svg>
+              </Link>
+            ))}
+          </div>
+        )}
+      </main>
+    </div>
+  )
+}
